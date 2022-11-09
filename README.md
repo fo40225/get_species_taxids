@@ -1,6 +1,10 @@
 # get_species_taxids
 
 ```
+git clone https://github.com/fo40225/get_species_taxids.git
+cd get_species_taxids
+pip install -r requirements.txt
+
 wget https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz
 tar axvf taxdump.tar.gz
 python build_tree.py
