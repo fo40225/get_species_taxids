@@ -11,6 +11,7 @@ def main():
     parser.add_argument("-l", "--level", help=" ncbi taxonomy rank level ", default='species', required=False)
     parser.add_argument("--tree", help=" prebuild tree path ", default='nodes.pkl', required=False)
     parser.add_argument("--merged", help=" merged.tmp ", default='merged.dmp', required=False)
+    parser.add_argument("--expand", help=" expand the result to the last leaf ", action="store_true")
     args = parser.parse_args()
 
     with open(args.tree, 'rb') as f:
@@ -60,6 +61,14 @@ def main():
             for child in LevelOrderIter(node):
                 if child.rank == args.level:
                     results.add(child.tax_id)
+
+    if args.expand:
+        new_result = set()
+        for id in results:
+            n = nodes.get(id)
+            for child in LevelOrderIter(n):
+                new_result.add(child.tax_id)
+        results = new_result
 
     for r in results:
         print(r)
